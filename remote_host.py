@@ -5,7 +5,7 @@ import time
 class remote_host():
     def __init__(self, ip, port, user, pasw):
         self.ip   = ip
-        self.port = port
+        self.port = int(port)
         self.user = user
         self.pasw = pasw
 
@@ -18,8 +18,9 @@ class remote_host():
     def close(self):
         self.c.close()
 
-    def check_latency(self, repeat = 1):
-        assert self.c.get_transport().is_active()
+    def check_latency(self, repeat = 10):
+        assert self.c.get_transport().is_active(), 'Can not connect'
+        repeat = int(repeat)
         with self.c.invoke_shell() as ssh:
             r = []
             symbol = '!'
